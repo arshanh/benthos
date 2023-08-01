@@ -121,7 +121,11 @@ func (r *redisPubSubReader) Read(ctx context.Context) (*service.Message, service
 			_ = r.disconnect()
 			return nil, nil, component.ErrTypeClosed
 		}
-		return service.NewMessage([]byte(rMsg.Payload)), func(ctx context.Context, err error) error {
+		msg := service.NewMessage([]byte(rMsg.Payload))
+
+		msg.MetaSetMut("redis_pubsub_channel", rMsg.Channel)
+
+		return msg, func(ctx context.Context, err error) error {
 			return nil
 		}, nil
 	case <-ctx.Done():
