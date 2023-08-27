@@ -306,13 +306,13 @@ func (a *amqp09Writer) Write(ctx context.Context, msg *service.Message) error {
 	if err != nil {
 		return fmt.Errorf("binding key interpolation error: %w", err)
 	}
-	bindingKey = strings.ReplaceAll(bindingKey, "/", ".")
+	// bindingKey = strings.ReplaceAll(bindingKey, "/", ".")
 
 	msgType, err := a.msgType.TryString(msg)
 	if err != nil {
 		return fmt.Errorf("msg type interpolation error: %w", err)
 	}
-	msgType = strings.ReplaceAll(msgType, "/", ".")
+	// msgType = strings.ReplaceAll(msgType, "/", ".")
 
 	contentType, err := a.contentType.TryString(msg)
 	if err != nil {
